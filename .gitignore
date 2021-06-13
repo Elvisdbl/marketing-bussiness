@@ -1,5 +1,16 @@
+
+
 /server/node_modules
 /server/examples
+/server/build
 
+
+
+
+
+
+/client/node_modules
+/client/examples
+/client/build
 
 context.txt

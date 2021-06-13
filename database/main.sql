@@ -1,5 +1,5 @@
 --Creating tables and database
--- customers
+-- users
 -- services
 -- orders
 -- message
@@ -7,11 +7,12 @@
 -- plans
 -- areas
 -- partners
+
 CREATE DATABASE `marketing`;
 
 USE `marketing`;
 
-CREATE TABLE IF NOT EXISTS `customers` (
+CREATE TABLE IF NOT EXISTS `users` (
     `id_user` INT UNSIGNED NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(25) NOT NULL,
     `email` VARCHAR(25) NOT NULL,
@@ -44,7 +45,7 @@ CREATE TABLE IF NOT EXISTS `messages`(
     `message` VARCHAR(25) NOT NULL,
     `message_date` DATETIME NOT NULL,
     PRIMARY KEY(`id_message`),
-    FOREIGN KEY(`id_user`) REFERENCES `customers`(`id_user`)
+    FOREIGN KEY(`id_user`) REFERENCES `users`(`id_user`)
 );
 
 CREATE TABLE IF NOT EXISTS `chats`(
@@ -56,7 +57,7 @@ CREATE TABLE IF NOT EXISTS `chats`(
 CREATE TABLE IF NOT EXISTS `plans`(
     `id_plan` INT UNSIGNED NOT NULL AUTO_INCREMENT,
     `id_service` INT UNSIGNED NOT NULL,
-    `plan` VARCHAR(25) NOT NULL,
+    `name` VARCHAR(25) NOT NULL,
     `description` VARCHAR(25) NOT NULL,
     PRIMARY KEY(`id_plan`),
     FOREIGN KEY(`id_service`) REFERENCES `services`(`id_service`)
@@ -64,7 +65,7 @@ CREATE TABLE IF NOT EXISTS `plans`(
 
 CREATE TABLE IF NOT EXISTS `areas`(
     `id_area` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    `area` VARCHAR(25) NOT NULL,
+    `name` VARCHAR(25) NOT NULL,
     PRIMARY KEY(`id_area`)
 );
 

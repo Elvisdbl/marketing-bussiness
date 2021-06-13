@@ -18,12 +18,12 @@ export interface Order {
 
 export interface Message {
   id_message?: number;
-  id_user: number;
+  id_user?: number;
   message: string;
   message_date: Date;
 }
 
-export interface Customer {
+export interface User {
   id_user?: number;
   name?: string;
   email?: string;
@@ -36,7 +36,7 @@ export interface Chat {
 
 export interface Area {
   id_area?: number;
-  area: string;
+  area: string; // change it by name
 }
 
 export interface Partner {
@@ -47,6 +47,6 @@ export interface Partner {
 export interface Plan {
   id_plan?: number;
   id_service?: number;
-  plan: string;
+  plan: string; // change it by name
   description: string;
 }
