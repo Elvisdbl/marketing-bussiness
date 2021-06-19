@@ -4,9 +4,7 @@ import { Request, Response } from "express";
 import { connect } from "../database";
 
 //Interfaces
-import {
-  Partner,
-} from "../interface/interfaces";
+import { IPartner } from "../interface/interfaces";
 
 // partners
 
@@ -40,7 +38,14 @@ export async function createPartner(
   req: Request,
   res: Response
 ): Promise<Response | void> {
-  const newPartner: Partner = req.body;
+  const { id_partner, name } = req.body;
+
+  const newPartner: IPartner = {
+    id_partner: id_partner,
+    name: name,
+    image: req.file.path,
+  };
+
   const conn = await connect();
   await conn.query("INSERT INTO partners SET ?", [newPartner]);
   res.json({
@@ -53,7 +58,15 @@ export async function updatePartner(
   res: Response
 ): Promise<Response | void> {
   const id = req.params.id;
-  const updatedPartner: Partner = req.body;
+  
+  const { id_partner, name } = req.body;
+
+  const updatedPartner: IPartner = {
+    id_partner: id_partner,
+    name: name,
+    image: req.file.path,
+  };
+
   const conn = await connect();
   await conn.query("UPDATE partners SET ? WHERE id_partner = ?", [
     updatedPartner,
@@ -75,5 +88,5 @@ export async function deletePartner(
     message: "Partner has been deleted",
   });
 }
- 
+
 // Fine

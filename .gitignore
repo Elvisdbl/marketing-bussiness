@@ -3,7 +3,7 @@
 /server/node_modules
 /server/examples
 /server/build
-
+/server/.env
 
 
 
@@ -12,5 +12,6 @@
 /client/node_modules
 /client/examples
 /client/build
+/client/.env
 
 context.txt

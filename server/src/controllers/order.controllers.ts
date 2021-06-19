@@ -4,7 +4,7 @@ import { Request, Response } from "express";
 import { connect } from "../database";
 
 //Interfaces
-import { Order } from "../interface/interfaces";
+import { IOrder } from "../interface/interfaces";
 
 // orders
 
@@ -37,7 +37,7 @@ export async function createOrder(
   req: Request,
   res: Response
 ): Promise<Response | void> {
-  const newOrder: Order = req.body;
+  const newOrder: IOrder = req.body;
   const conn = await connect();
   await conn.query("INSERT INTO orders SET ?", [newOrder]);
   res.json({
@@ -50,7 +50,7 @@ export async function updateOrder(
   res: Response
 ): Promise<Response | void> {
   const id = req.params.id;
-  const updatedService: Order = req.body;
+  const updatedService: IOrder = req.body;
   const conn = await connect();
   await conn.query("UPDATE orders SET ? WHERE id_order = ?", [
     updatedService,

@@ -6,13 +6,14 @@ import {
   updatePartner,
   deletePartner,
 } from "../controllers/partner.controller";
+import multer from '../config/multer';
 
 const router = Router();
 
 router.get("/", getPartners);
-router.post("/", createPartner);
+router.post("/", multer.single('image') ,createPartner);
 router.get("/:id", getPartner);
-router.put("/:id", updatePartner);
+router.put("/:id", multer.single('image') ,updatePartner);
 router.delete("/:id", deletePartner);
 
 export default router;

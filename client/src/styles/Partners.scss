@@ -1,0 +1,14 @@
+.our-partners {
+	margin: 20px 10px 10px 0;
+	padding: 29px 10px;
+	background-color: #fff;
+	box-shadow: rgba(33, 33, 33, 0.06) 0 4px 24px 5px;
+	border-radius: 8px;
+	text-align: center;
+	transition: all 1s;
+  
+	&:hover {
+	  margin-top: 10px;
+	  transition: all 1s;
+	}
+  }

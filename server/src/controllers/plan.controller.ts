@@ -4,7 +4,7 @@ import { Request, Response } from "express";
 import { connect } from "../database";
 
 //Interfaces
-import { Plan } from "../interface/interfaces";
+import { IPlan } from "../interface/interfaces";
 
 // plans
 
@@ -14,8 +14,8 @@ export async function getPlans(
 ): Promise<Response | void> {
   try {
     const conn = await connect();
-    const services = await conn.query("SELECT * FROM plans");
-    return res.status(200).json(services[0]);
+    const plan = await conn.query("SELECT * FROM plans");
+    return res.status(200).json(plan[0]);
   } catch (e) {
     console.log(e);
   }
@@ -27,17 +27,17 @@ export async function getPlan(
 ): Promise<Response | void> {
   const id = req.params.id;
   const conn = await connect();
-  const service = await conn.query("SELECT * FROM plans WHERE id_plan = ?", [
+  const plan = await conn.query("SELECT * FROM plans WHERE id_plan = ?", [
     id,
   ]);
-  res.json(service[0]);
+  res.json(plan[0]);
 }
 
 export async function createPlan(
   req: Request,
   res: Response
 ): Promise<Response | void> {
-  const newPlan: Plan = req.body;
+  const newPlan: IPlan = req.body;
   const conn = await connect();
   await conn.query("INSERT INTO plans SET ?", [newPlan]);
   res.json({
@@ -50,7 +50,7 @@ export async function updatePlan(
   res: Response
 ): Promise<Response | void> {
   const id = req.params.id;
-  const updatedPlan: Plan = req.body;
+  const updatedPlan: IPlan = req.body;
   const conn = await connect();
   await conn.query("UPDATE plans SET ? WHERE id_plan = ?", [updatedPlan, id]);
   res.json({

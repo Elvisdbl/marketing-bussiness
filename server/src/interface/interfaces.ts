@@ -1,13 +1,13 @@
-export interface Service {
+export interface IService {
   id_service?: number;
   title: string;
   type: string;
   description: string;
-  price: string; //i have to fix this
-  details: string;
+  price: number;
+  image?: string;
 }
 
-export interface Order {
+export interface IOrder {
   id_order?: number;
   id_user?: number;
   id_service?: number;
@@ -16,37 +16,45 @@ export interface Order {
   total_price: number;
 }
 
-export interface Message {
-  id_message?: number;
-  id_user?: number;
-  message: string;
-  message_date: Date;
-}
-
-export interface User {
+export interface IUser {
   id_user?: number;
   name?: string;
   email?: string;
+  password: string;
 }
 
-export interface Chat {
+export interface IPlan {
+  id_plan?: number;
+  id_service?: number;
+  type: string;
+  price: number;
+}
+
+export interface IPlanDetails {
+  id_detail?: number;
+  id_plan: number;
+  name: string;
+}
+
+export interface IPartner {
+  id_partner?: number;
+  name: string;
+  image: string;
+}
+
+export interface IArea {
+  id_area?: number;
+  name: string;
+}
+
+export interface IChat {
   id_chat?: number;
   id_message?: number;
 }
 
-export interface Area {
-  id_area?: number;
-  area: string; // change it by name
-}
-
-export interface Partner {
-  id_partner?: number;
-  name: string;
-}
-
-export interface Plan {
-  id_plan?: number;
-  id_service?: number;
-  plan: string; // change it by name
-  description: string;
+export interface IMessage {
+  id_message?: number;
+  id_user?: number;
+  message: string;
+  message_created: Date;
 }

@@ -1,5 +1,6 @@
 import express from "express";
 import morgan from "morgan";
+import path from 'path';
 
 //Routes
 import AreaRoutes from "./routes/area.routes";
@@ -20,6 +21,8 @@ app.use("/user", UserRoutes);
 app.use("/order", OrderRoutes);
 app.use("/plan", PlanRoutes);
 app.use("/service", ServiceRoutes);
+
+app.use('/uploads',express.static(path.resolve('uploads')));
 
 app.listen(5000, () => {
   console.log("The application is listening on port 5000!");

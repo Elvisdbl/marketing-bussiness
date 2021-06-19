@@ -1,10 +1,12 @@
 import { Request, Response } from "express";
-//DB
+import path from "path";
+import fs from "fs-extra";
 
+//DB
 import { connect } from "../database";
 
 //Interfaces
-import { Service } from "../interface/interfaces";
+import { IService } from "../interface/interfaces";
 
 //Services
 
@@ -38,11 +40,23 @@ export async function createService(
   req: Request,
   res: Response
 ): Promise<Response | void> {
-  const newService: Service = req.body;
-  const conn = await connect();
-  await conn.query("INSERT INTO services SET ?", [newService]);
+  const { title, type, description, price } = req.body;
+
+  const newService: IService = {
+    title: title,
+    type: type,
+    description: description,
+    price: price,
+  };
+  console.log(newService);
+
+  // const conn = await connect();
+
+  // await conn.query("INSERT INTO services SET ?", [newService]);
+
   res.json({
     message: "New Service Created",
+    newService
   });
 }
 
@@ -51,7 +65,14 @@ export async function updateService(
   res: Response
 ): Promise<Response | void> {
   const id = req.params.id;
-  const updatedService: Service = req.body;
+  const { title, type, description, price } = req.body;
+  const updatedService: IService = {
+    title: title,
+    type: type,
+    description: description,
+    price: price,
+    image: req.file.path,
+  };
   console.log(updateService);
   const conn = await connect();
   await conn.query("UPDATE services SET ? WHERE id_service = ?", [
@@ -68,11 +89,34 @@ export async function deleteService(
   res: Response
 ): Promise<Response | void> {
   const id = req.params.id;
+
   const conn = await connect();
-  await conn.query("DELETE FROM services WHERE id_service = ?", [id]);
+
+  const info = await conn.query("DELETE FROM services WHERE id_service = ?", [
+    id,
+  ]);
+
+  console.log(info);
+
   res.json({
     message: "Service has been deleted",
+    info,
   });
 }
 
-// Fine
+export async function getPlansByService(
+  req: Request,
+  res: Response
+): Promise<Response | void> {
+  try {
+    const id = req.params.id;
+    const conn = await connect();
+    const planbyService = await conn.query(
+      "SELECT * FROM plans WHERE id_service = ?",
+      [id]
+    );
+    return res.status(200).json(planbyService[0]);
+  } catch (e) {
+    console.log(e);
+  }
+}

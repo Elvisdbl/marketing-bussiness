@@ -4,7 +4,7 @@ import { Request, Response } from "express";
 import { connect } from "../database";
 
 //Interfaces
-import { User } from "../interface/interfaces";
+import { IUser } from "../interface/interfaces";
 
 // Users
 
@@ -39,7 +39,7 @@ export async function createUser(
   req: Request,
   res: Response
 ): Promise<Response | void> {
-  const newCustomer: User = req.body;
+  const newCustomer: IUser = req.body;
   const conn = await connect();
   await conn.query("INSERT INTO Users SET ?", [newCustomer]);
   res.json({
@@ -52,7 +52,7 @@ export async function updateUser(
   res: Response
 ): Promise<Response | void> {
   const id = req.params.id;
-  const updatedCustomer: User = req.body;
+  const updatedCustomer: IUser = req.body;
   const conn = await connect();
   await conn.query("UPDATE Users SET ? WHERE id_user = ?", [
     updatedCustomer,

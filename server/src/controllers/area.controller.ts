@@ -4,7 +4,7 @@ import { Request, Response } from "express";
 import { connect } from "../database";
 
 //Interfaces
-import { Area } from "../interface/interfaces";
+import { IArea } from "../interface/interfaces";
 
 export async function getAreas(
   req: Request,
@@ -35,7 +35,7 @@ export async function createArea(
   req: Request,
   res: Response
 ): Promise<Response | void> {
-  const newArea: Area = req.body;
+  const newArea: IArea = req.body;
   const conn = await connect();
   await conn.query("INSERT INTO areas SET ?", [newArea]);
   res.json({
@@ -48,7 +48,7 @@ export async function updateArea(
   res: Response
 ): Promise<Response | void> {
   const id = req.params.id;
-  const updatedArea: Area = req.body;
+  const updatedArea: IArea = req.body;
   const conn = await connect();
   await conn.query("UPDATE areas SET ? WHERE id_area = ?", [updatedArea, id]);
   res.json({
