@@ -67,5 +67,3 @@ export async function deleteArea(
     message: "Area has been deleted",
   });
 }
-
-//fine

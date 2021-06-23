@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
-
+import path from "path";
+import fs from "fs-extra";
 //DB
 import { connect } from "../database";
 
@@ -38,10 +39,9 @@ export async function createPartner(
   req: Request,
   res: Response
 ): Promise<Response | void> {
-  const { id_partner, name } = req.body;
+  const { name } = req.body;
 
   const newPartner: IPartner = {
-    id_partner: id_partner,
     name: name,
     image: req.file.path,
   };
@@ -58,11 +58,10 @@ export async function updatePartner(
   res: Response
 ): Promise<Response | void> {
   const id = req.params.id;
-  
+
   const { id_partner, name } = req.body;
 
   const updatedPartner: IPartner = {
-    id_partner: id_partner,
     name: name,
     image: req.file.path,
   };
@@ -83,10 +82,16 @@ export async function deletePartner(
 ): Promise<Response | void> {
   const id = req.params.id;
   const conn = await connect();
+  const info = await conn.query(
+    "SELECT image FROM partners WHERE id_partner = ?",
+    [id]
+  );
   await conn.query("DELETE FROM partners WHERE id_partner = ?", [id]);
+
+  if (info[0][0].image) {
+    await fs.unlink(path.resolve(info[0][0].image));
+  }
   res.json({
     message: "Partner has been deleted",
   });
 }
-
-// Fine

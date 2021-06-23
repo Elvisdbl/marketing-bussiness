@@ -1,3 +1,5 @@
+import {IPlan} from '../interface/interfaces';
+
 export const getServices = async () => {
   try {
     const res = await fetch("/service", {
@@ -34,9 +36,11 @@ export const getPlans = async () => {
   }
 };
 
-export const getPlansByService = async (id: number) => {
+export const getPartners = async () => {
   try {
-    const res = await fetch(`/service/${id}/plans`, { method: "GET" });
+    const res = await fetch("/partner", {
+      method: "GET",
+    });
     const data = await res.json();
     return data;
   } catch (e) {

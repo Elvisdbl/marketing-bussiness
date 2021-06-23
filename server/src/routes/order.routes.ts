@@ -2,7 +2,7 @@ import { Router } from "express";
 import {
   getOrders,
   getOrder,
-  createOrder,
+  createOrder2,
   updateOrder,
   deleteOrder,
 } from "../controllers/order.controllers";
@@ -10,7 +10,7 @@ import {
 const router = Router();
 
 router.get("/", getOrders);
-router.post("/", createOrder);
+router.post("/", createOrder2);
 router.get("/:id", getOrder);
 router.put("/:id", updateOrder);
 router.delete("/:id", deleteOrder);

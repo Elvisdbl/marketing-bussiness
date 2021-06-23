@@ -4,7 +4,7 @@ import { Request, Response } from "express";
 import { connect } from "../database";
 
 //Interfaces
-import { IOrder } from "../interface/interfaces";
+import { IOrder, IUser } from "../interface/interfaces";
 
 // orders
 
@@ -73,4 +73,34 @@ export async function deleteOrder(
   });
 }
 
-// fine
+export async function createOrder2(
+  req: Request,
+  res: Response
+): Promise<Response | void> {
+  const { name, email, id_service, details, total_price } = req.body;
+  const newUser: IUser = {
+    name,
+    email,
+  };
+
+  const conn = await connect();
+  await conn.query("START TRANSACTION;");
+  await conn.query("INSERT INTO users SET ?", [newUser]);
+
+  const result = await conn.query(
+    "SELECT id_user FROM users ORDER BY id_user DESC LIMIT 1"
+  );
+  const result1 = JSON.parse(JSON.stringify(result[0]));
+
+  const newOrder: IOrder = {
+    id_user: result1[0].id_user,
+    id_service: id_service,
+    details: details,
+    total_price: total_price,
+  };
+
+  await conn.query("INSERT INTO orders SET ?", [newOrder]);
+  await conn.query("COMMIT");
+
+  return res.json(newOrder);
+}

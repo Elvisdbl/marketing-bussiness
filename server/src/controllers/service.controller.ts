@@ -41,22 +41,17 @@ export async function createService(
   res: Response
 ): Promise<Response | void> {
   const { title, type, description, price } = req.body;
-
   const newService: IService = {
     title: title,
     type: type,
     description: description,
     price: price,
+    image: req.file.path,
   };
-  console.log(newService);
-
-  // const conn = await connect();
-
-  // await conn.query("INSERT INTO services SET ?", [newService]);
-
-  res.json({
-    message: "New Service Created",
-    newService
+  const conn = await connect();
+  await conn.query("INSERT INTO services SET ?", [newService]);
+  return res.json({
+    message: "Service successfully created",
   });
 }
 
@@ -89,34 +84,18 @@ export async function deleteService(
   res: Response
 ): Promise<Response | void> {
   const id = req.params.id;
-
   const conn = await connect();
+  const info = await conn.query(
+    "SELECT image FROM services WHERE id_service = ?",
+    [id]
+  );
+  await conn.query("DELETE FROM services WHERE id_service = ?", [id]);
 
-  const info = await conn.query("DELETE FROM services WHERE id_service = ?", [
-    id,
-  ]);
-
-  console.log(info);
+  if (info[0][0].image) {
+    await fs.unlink(path.resolve(info[0][0].image));
+  }
 
   res.json({
     message: "Service has been deleted",
-    info,
   });
-}
-
-export async function getPlansByService(
-  req: Request,
-  res: Response
-): Promise<Response | void> {
-  try {
-    const id = req.params.id;
-    const conn = await connect();
-    const planbyService = await conn.query(
-      "SELECT * FROM plans WHERE id_service = ?",
-      [id]
-    );
-    return res.status(200).json(planbyService[0]);
-  } catch (e) {
-    console.log(e);
-  }
 }

@@ -13,9 +13,42 @@ export async function getPlans(
   res: Response
 ): Promise<Response | void> {
   try {
+
     const conn = await connect();
     const plan = await conn.query("SELECT * FROM plans");
-    return res.status(200).json(plan[0]);
+    const details = await  conn.query("SELECT * FROM plan_details");
+    
+    const resultPlan = JSON.parse(JSON.stringify(plan[0]));
+    const resultDetails = JSON.parse(JSON.stringify(details[0]));
+
+    let plans = [];
+
+    if(resultPlan && resultDetails){
+      resultPlan.forEach(item => {
+
+        const detail = [];
+
+        plans.push({
+          id_plan: item.id_plan,
+          type: item.type,
+          price: item.price,
+          details: detail
+        });
+
+        resultDetails.forEach(item2 => {
+          if(item.id_plan === item2.id_plan){
+          detail.push({
+            id_detail: item2.id_detail,
+            id_plan: item2.id_plan,
+            name: item2.name
+          });
+          }
+        });
+      });
+    }
+
+    return res.status(200).json(plans);  
+
   } catch (e) {
     console.log(e);
   }
@@ -69,5 +102,3 @@ export async function deletePlan(
     message: "Plan has been deleted",
   });
 }
-
-// Fine

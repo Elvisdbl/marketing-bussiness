@@ -1,27 +1,30 @@
 import React from "react";
-import { Switch, Route } from "react-router-dom";
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
+import { Switch, Route, Link } from "react-router-dom";
 import Home from "./components/Screens/Home";
 import ServiceDetails from "./components/Screens/ServiceDetails";
-import PlansDetails from "./components/Screens/PlansDetails";
-import Dashboard from './components/Screens/Dashboard';
-
-
+import Dashboard from "./components/Screens/Dashboard";
+import Contract from "./components/Screens/Contract";
 
 function App() {
+  const NoMatchPage = () => {
+    return (
+      <div>
+        <h3>404 - Not found</h3>
+        <Link to={`/`} className="btn-green">Go to the home</Link>
+      </div>
+      
+    );
+  };
   return (
     <>
-      <Navbar />
       <Switch>
         <Route path="/" component={Home} exact />
         <Route path="/service/:id" component={ServiceDetails} />
-        <Route path="/plan/:id" component={PlansDetails} />
-
-        {/* End */}
-        <Route path="/dashboard/admin" component={Dashboard}/>
+        <Route path= "/contract/:id" component={Contract} />
+        {/* Admin Routes */}
+        <Route path="/dashboard/admin" component={Dashboard} />
+        <Route component={NoMatchPage} />
       </Switch>
-      <Footer />
     </>
   );
 }

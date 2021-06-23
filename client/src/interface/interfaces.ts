@@ -11,7 +11,7 @@ export interface IOrder {
   id_order?: number;
   id_user?: number;
   id_service?: number;
-  order_date?: Date;
+  order_date: Date;
   details: string;
   total_price: number;
 }
@@ -20,14 +20,15 @@ export interface IUser {
   id_user?: number;
   name?: string;
   email?: string;
-  password?: string;
-  isAdmin?: boolean;
+  password: string;
+  isAdmin: boolean;
 }
 
 export interface IPlan {
   id_plan?: number;
   type: string;
   price: number;
+  details: Array<IPlanDetails>
 }
 
 export interface IPlanDetails {
@@ -58,3 +59,11 @@ export interface IMessage {
   message: string;
   message_created: Date;
 }
+
+export type Match = {
+  match: {
+    params: {
+      id: number;
+    };
+  };
+};

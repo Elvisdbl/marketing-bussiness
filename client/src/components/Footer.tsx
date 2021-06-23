@@ -1,9 +1,23 @@
-import React from "react";
-import '../styles/Footer.scss';
+import "../styles/Footer.scss";
 
 const Footer = () => {
+  // const { pathname } = useLocation();
+  // const [show, setShow] = useState(false);
+
+  // const showHideClassName = show ? "display-block" : "display-none";
+
+  // useEffect(() => {
+  //   if (
+  //     pathname === "/dashboard/admin/"
+  //   ) {
+  //     setShow(false);
+  //   } else {
+  //     setShow(true);
+  //   }
+  // }, [pathname]);
+
   return (
-    <div className="footer">
+    <div className={`footer`}>
       <div className="container footer-top">
         <div className="row">
           <div className="col-md-4 text-center">
@@ -94,11 +108,7 @@ const Footer = () => {
             <p>
               Copyright © 2021 <span className="template-name">Digital +</span>.
               Designed by{" "}
-              <a
-                href="https://github.com/Elvisdbl"
-              >
-                Elvis Bonilla
-              </a>
+              <a href="https://github.com/Elvisdbl">Elvis Bonilla</a>
             </p>
           </div>
         </div>

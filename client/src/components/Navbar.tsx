@@ -1,11 +1,25 @@
-import React from "react";
 import { Link } from "react-router-dom";
-import '../styles/Navbar.scss';
+import "../styles/Navbar.scss";
 
 const Navbar = () => {
+  // const { pathname } = useLocation();
+  // const [show, setShow] = useState(false);
+
+  // const showHideClassName = show ? "display-block" : "display-none";
+
+  // useEffect(() => {
+  //   if (
+  //     pathname === "/dashboard/admin/"
+  //   ) {
+  //     setShow(false);
+  //   } else {
+  //     setShow(true);
+  //   }
+  // }, [pathname]);
+
   return (
     <>
-      <header className="header">
+      <header className={`header`}>
         <nav className="navbar navbar-default navbar-fixed-top">
           <div className="container">
             <nav className="navbar navbar-expand-lg">
@@ -46,9 +60,9 @@ const Navbar = () => {
                   </li>
 
                   <li className="discover-link">
-                    <a href="#register" className="discover-btn">
+                    <Link to="/dashboard/admin" className="discover-btn">
                       Get Started
-                    </a>
+                    </Link>
                   </li>
                 </ul>
               </div>

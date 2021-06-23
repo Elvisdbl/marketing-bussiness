@@ -74,5 +74,3 @@ export async function deleteUser(
     message: "User has been deleted",
   });
 }
-
-//Fine

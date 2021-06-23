@@ -1,101 +1,71 @@
 import React, { useState, useEffect } from "react";
-import { getService, getPlansByService } from "../../API";
+import { Link } from "react-router-dom";
+import Plans from "../Plans";
+import Partners from "../Partners";
+import { getService } from "../../API";
+import { IService,Match } from "../../interface/interfaces";
+import Navbar from "../Navbar";
+import Footer from "../Footer";
 
-type Match = {
-  match: {
-    params: {
-      id: number;
-    };
-  };
-};
-
-interface IService {
-  id_service: number;
-  title: string;
-  type: string;
-  description: string;
-  price: number;
-  details: string;
-}
-
-interface IPlans {
-  id_plan: number;
-  id_service: number;
-  name: string;
-  description: string;
-}
 
 const Details = ({ match }: Match) => {
   const [service, setService] = useState({} as IService);
-  const [plans, setPlans] = useState([] as Array<IPlans>);
-
-  const { id_service, title, type, description, price, details } = service;
+  const { id_service, title, image, type, description, price } = service;
 
   useEffect(() => {
     const requestService = async () => {
       setService(await getService(match.params.id));
     };
     requestService();
-
-    const requestPlansByService = async () => {
-      setPlans(await getPlansByService(id_service));
-    };
-    requestPlansByService();
-  }, [id_service, match.params.id]);
+  }, [match.params.id]);
 
   return (
     <>
-      <section className="home-section" id="home">
-        <div className="home-section-overlay"></div>
-
-        <div className="container">
+      <Navbar />
+      <section key={id_service} className="section-bg-2" id="home">
+        <div className="section-bg-overlay"></div>
+      </section>
+      <div className="section-grey">
+        <div className="container" id="service">
           <div className="row">
-            <div
-              className="col-md-12 text-center"
-              style={{ position: "relative" }}
-            >
-              <h1>We are a digital marketing agency</h1>
+            <div className="col-md-6 padding-top-80">
+              <h3>{title}</h3>
+              <ul className="benefits">
+                <li>
+                  <i className="fas fa-check"></i>
+                  {description}
+                </li>
+                <li>
+                  <i className="fas fa-check"></i>
+                  {type}
+                </li>
+                <li>
+                  <i className="fas fa-check"></i>
+                  {price}
+                </li>
+              </ul>
+              <Link
+                to={`/contract/${id_service}`}
+                className="btn-green small scrool"
+              >
+                Contract
+              </Link>
+            </div>
 
-              <p className="hero-text">
-                We solve your digital marketing problems all over the country.
-              </p>
-
-              <a href="#services" className="btn-green scrool">
-                Explore Our Services
-              </a>
-              <br />
-
-              <a href="#services" className="arrow-down scrool">
-                <i className="pe-7s-angle-down-circle"></i>
-              </a>
+            <div className="col-md-6 padding-top-80">
+              <img
+                src={`http://localhost:5000/${image}`}
+                className="width-100 margin-right-15 box-shadow"
+                alt="pic"
+              />
             </div>
           </div>
         </div>
-      </section>
+      </div>
+      <Plans />
+      <Partners />
+      <Footer />
     </>
-
-    // <div>
-    //   <div>
-    //     <h1>{title}</h1>
-    //     <p>{type}</p>
-    //     <p>{description}</p>
-    //     <p>{price}</p>
-    //     <p>{details}</p>
-    //   </div>
-
-    //   <h1>Plans</h1>
-
-    //   {plans
-    //     ? plans.map(({ name, description }) => {
-    //         return (
-    //           <div>
-    //             <p>{name}</p>
-    //             <p>{description}</p>
-    //           </div>
-    //         );
-    //       })
-    //     : "loading..."}
-    // </div>
   );
 };
 export default Details;
