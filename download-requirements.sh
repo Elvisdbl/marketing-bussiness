@@ -1,0 +1,1 @@
+cd client; npm i; cd ../server; npm i; npm i ts-node typescript -g;
